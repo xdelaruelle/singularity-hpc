@@ -7,6 +7,9 @@
 # please open an issue https://github.com/singularityhub/singularity-hpc
 module_sys: lmod
 
+# config editor
+config_editor: vim
+
 # set a default container technology (singularity or podman)
 container_tech: singularity
 
@@ -17,20 +20,27 @@ registry: $root_dir/registry
 # The install directory for modules. Defaults to the install directory/modules
 module_base: $root_dir/modules
 
+# Format string for module commands exec,run,shell (not aliases) (can also include {{version}}
+# This is where you might add a prefix to your module names, if desired.
+# flatname is the module name with / replaced with -
+module_name: "{{ flatname }}"
+
 # store containers separately from module files
 container_base:
 
 # if defined, add to lmod script to load this Singularity module first
 singularity_module: null
-
-# if set, prefix module alias names with prefix (another kind of namespacing)
-module_exc_prefix: ''
+podman_module: null
 
 # string with comma separated list of paths to binds. If set, expored to SINGULARITY_BINDPATH
 bindpaths:
 
 # exported to SINGULARITY_SHELL, defaults to /bin/bash.
-singularity_shell: /bin/bash
+singularity_shell: /bin/sh
+podman_shell: /bin/sh
+
+# shell for test.sh file
+test_shell: /bin/bash
 
 # the module namespace you want to install from. E.g., if you have ghcr.io/autamus/clingo
 # and you set the namespace to ghcr.io/autamus, you can just do: shpc install clingo.
