@@ -1,6 +1,12 @@
 name: Test Modules
 
 on:
+  push:
+    branches-ignore:
+      - main
+      - gh-pages
+      - binoc/*
+      - binoc/**
   pull_request: []
 
 jobs:
@@ -87,8 +93,11 @@ jobs:
           shpc config set module_sys:${{ matrix.module }}
           shpc install python:3.9.5-alpine
 
+          shopt expand_aliases || true
+          shopt -s expand_aliases
           module use ./modules
           module load python/3.9.5-alpine
+          alias
 
           printf "\n\nmodule show ============================================\n"
           module show python/3.9.5-alpine
